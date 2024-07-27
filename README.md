@@ -9,7 +9,7 @@
 # Instructions for Uploading Data to S3
 
 
-To facilitate data transfer, we have set up an S3 bucket where you can deposit your data into the appropriate folders. Below are the instructions and the data categories for uploading.
+To facilitate data transfer, we have set up an S3 bucket where you can deposit your data into the appropriate folders. The security level of the data is high as the buckets are secure. To access the bucket, you will need an AWS access key and secret key. Below are the instructions and the data categories for uploading.
 
 ## Folder Structure
 
