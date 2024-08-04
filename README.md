@@ -6,125 +6,170 @@
 </p>
 
 
-# Instructions for Uploading Data to S3
 
+# Data Hub
 
-To facilitate data transfer, we have set up an S3 bucket where you can deposit your data into the appropriate folders. The security level of the data is high as the buckets are secure. To access the bucket, you will need an AWS access key and secret key. Below are the instructions and the data categories for uploading.
+## Metodologías y Métricas
 
-## Folder Structure
+Realizamos métricas de audiencias utilizando las siguientes metodologías: Rating, Share, Reach, y ATS. Estas métricas se procesan a partir de datos proporcionados por nuestros socios y se calculan en intervalos de Minuto a Minuto, 30 minutos y 60 minutos.
 
-1. **Activity**
-   - **Description:** Data related to the activity of set-top boxes or OTTs.
-   - **Path:** `s3://<bucket-name>/activity/`
-   - **Recommended File Formats:** Parquet, JSONL, CSV, TSV
+### Métricas
 
-2. **Users**
-   - **Description:** User information with sensitive data anonymized using SHA256 and MD5.
-   - **Path:** `s3://<bucket-name>/users/`
-   - **Recommended File Formats:** Parquet, JSONL, CSV, TSV
-   - **Note:** Ensure all sensitive information is properly anonymized.
+- **SHARE:** 
+  ```
+  SHARE = (Cantidad de usuarios únicos activos en el canal en el slot de tiempo seleccionado / La cantidad de usuarios únicos activos en el slot de tiempo seleccionado) * 100
+  ```
 
-3. **EPG**
-   - **Description:** Electronic Program Guide (EPG) and Channels information.
-   - **Path:** `s3://<bucket-name>/epg/`
-   - **Recommended File Formats:** Parquet, JSONL, CSV, TSV
+- **RATING/REACH:** 
+  ```
+  RATING/REACH = (Cantidad de usuarios únicos activos en el canal en el slot de tiempo seleccionado / La cantidad de usuarios únicos activos en el día encuestado)
+  ```
+  >El rating en 30 y 60 minutos es el promedio generado en ese slot de tiempo.
 
-4. **Devices**
-   - **Description:** Information about the devices used.
-   - **Path:** `s3://<bucket-name>/devices/`
-   - **Recommended File Formats:** Parquet, JSONL, CSV, TSV
+- **ATS:**
+  ```
+  ATS = (Cantidad de usuarios activos en el canal en el slot de tiempo seleccionado / La cantidad de usuarios únicos activos en el canal y el slot de tiempo seleccionado)
+  ```
 
-## General Recommendations
+## Carga de datos por parte de los socios
 
-- **File Formats:** We recommend using standard formats such as Parquet, JSONL, CSV, or TSV to facilitate integration and data analysis.
-- **File Naming:** Use descriptive names and dates in the format YYYYMMDD to make identification easier. Example: `activity_20240709.parquet`
-- **Uploading Files:**
-  - Use the AWS CLI, or any tool compatible with S3 to upload files.
-  - Ensure you have the necessary permissions to write to the respective folders.
-  - Verify that files are uploaded correctly.
+### Instructions for Uploading Data to S3
 
-## Installing AWS CLI
+Para facilitar la transferencia de datos, hemos configurado un bucket S3 donde puedes depositar tus datos en las carpetas correspondientes. El nivel de seguridad de los datos es alto ya que los buckets son seguros. Para acceder al bucket, necesitarás una clave de acceso y una clave secreta de AWS. A continuación, se presentan las instrucciones y las categorías de datos para la carga.
 
-To upload files using AWS CLI, you need to install it first:
+### Folder Structure
 
-1. **Windows:**
-   - Download the installer from the [AWS CLI Installation Guide](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-windows.html).
-   - Run the installer and follow the instructions.
+- **Activity**
+  - **Descripción:** Datos relacionados con la actividad de set-top boxes u OTTs.
+  - **Ruta:** `s3://<bucket-name>/activity/`
+  - **Formatos de archivo recomendados:** Parquet, JSONL, CSV, TSV
 
-2. **macOS:**
-   - Use Homebrew to install AWS CLI:
-     ```sh
-     brew install awscli
-     ```
+- **Users**
+  - **Descripción:** Información de usuarios con datos sensibles anonimizados utilizando SHA256 y MD5.
+  - **Ruta:** `s3://<bucket-name>/users/`
+  - **Formatos de archivo recomendados:** Parquet, JSONL, CSV, TSV
+  - **Nota:** Asegúrate de que toda la información sensible esté correctamente anonimizada.
 
-3. **Linux:**
-   - Use the following commands to install AWS CLI:
-     ```sh
-     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-     unzip awscliv2.zip
-     sudo ./aws/install
-     ```
+- **EPG**
+  - **Descripción:** Guía Electrónica de Programas (EPG) e información de canales.
+  - **Ruta:** `s3://<bucket-name>/epg/`
+  - **Formatos de archivo recomendados:** Parquet, JSONL, CSV, TSV
 
-After installation, configure AWS CLI with your credentials:
-```sh
+- **Devices**
+  - **Descripción:** Información sobre los dispositivos utilizados.
+  - **Ruta:** `s3://<bucket-name>/devices/`
+  - **Formatos de archivo recomendados:** Parquet, JSONL, CSV, TSV
+
+### General Recommendations
+
+- **Formatos de archivo:** Recomendamos utilizar formatos estándar como Parquet, JSONL, CSV o TSV para facilitar la integración y el análisis de datos.
+- **Nomenclatura de archivos:** Usa nombres descriptivos y fechas en el formato `YYYYMMDD` para facilitar la identificación. Ejemplo: `activity_20240709.parquet`
+- **Carga de archivos:**
+  - Utiliza AWS CLI o cualquier herramienta compatible con S3 para cargar archivos.
+  - Asegúrate de tener los permisos necesarios para escribir en las carpetas correspondientes.
+  - Verifica que los archivos se hayan cargado correctamente.
+
+### Installing AWS CLI
+
+Para cargar archivos utilizando AWS CLI, primero debes instalarlo:
+
+- **Windows:**
+  - Descarga el instalador desde la [Guía de Instalación de AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-windows.html).
+  - Ejecuta el instalador y sigue las instrucciones.
+
+- **macOS:**
+  - Utiliza Homebrew para instalar AWS CLI:
+    ```bash
+    brew install awscli
+    ```
+
+- **Linux:**
+  - Utiliza los siguientes comandos para instalar AWS CLI:
+    ```bash
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    sudo ./aws/install
+    ```
+
+Después de la instalación, configura AWS CLI con tus credenciales:
+
+```bash
 aws configure
 ```
-Enter your AWS Access Key ID, Secret Access Key, region, and output format when prompted.
 
-## Using Boto3 for Uploading Files
+Ingresa tu AWS Access Key ID, Secret Access Key, región y formato de salida cuando se te solicite.
 
-As an alternative, you can use the Boto3 library in Python to upload files to S3. Below is an example script:
+### Using Boto3 for Uploading Files
 
-1. **Install Boto3:**
-   ```sh
-   pip install boto3
-   ```
+Como alternativa, puedes usar la biblioteca Boto3 en Python para cargar archivos a S3. A continuación se muestra un script de ejemplo:
 
-2. **Example Python Script:**
-   ```python
-   import boto3
-   from botocore.exceptions import NoCredentialsError
+- **Instalar Boto3:**
+  ```bash
+  pip install boto3
+  ```
 
-   def upload_to_aws(local_file, bucket, s3_file):
-       s3 = boto3.client('s3')
-       try:
-           s3.upload_file(local_file, bucket, s3_file)
-           print("Upload Successful")
-           return True
-       except FileNotFoundError:
-           print("The file was not found")
-           return False
-       except NoCredentialsError:
-           print("Credentials not available")
-           return False
+- **Script de ejemplo en Python:**
+  ```python
+  import boto3
+  from botocore.exceptions import NoCredentialsError
 
-   uploaded = upload_to_aws('local_file.parquet', '<bucket-name>', 'activity/local_file.parquet')
-   ```
+  def upload_to_aws(local_file, bucket, s3_file):
+      s3 = boto3.client('s3')
+      try:
+          s3.upload_file(local_file, bucket, s3_file)
+          print("Upload Successful")
+          return True
+      except FileNotFoundError:
+          print("The file was not found")
+          return False
+      except NoCredentialsError:
+          print("Credentials not available")
+          return False
 
-## AWS CLI Command Examples
+  uploaded = upload_to_aws('local_file.parquet', '<bucket-name>', 'activity/local_file.parquet')
+  ```
 
-For those who prefer using the command line, here are some examples of how to upload files:
+### AWS CLI Command Examples
 
-- **Upload a file to Activity:**
-  ```sh
+Para aquellos que prefieren usar la línea de comandos, aquí hay algunos ejemplos de cómo cargar archivos:
+
+- **Cargar un archivo en Activity:**
+  ```bash
   aws s3 cp activity_20240709.parquet s3://<bucket-name>/activity/ --recursive
   ```
 
-- **Upload a file to Users:**
-  ```sh
+- **Cargar un archivo en Users:**
+  ```bash
   aws s3 cp users_20240709.jsonl s3://<bucket-name>/users/ --recursive
   ```
 
-- **Upload a file to EPG:**
-  ```sh
+- **Cargar un archivo en EPG:**
+  ```bash
   aws s3 cp epg_20240709.csv s3://<bucket-name>/epg/ --recursive
   ```
 
-- **Upload a file to Devices:**
-  ```sh
+- **Cargar un archivo en Devices:**
+  ```bash
   aws s3 cp devices_20240709.tsv s3://<bucket-name>/devices/ --recursive
   ```
 
-## Support
+## Proceso de Consumo
 
-If you have any questions or need assistance, please do not hesitate to contact our support team at [support@bb-media.com](mailto:support@bb-media.com) or [jm@bb-media.com](mailto:jm@bb-media.com).
+Los socios pueden acceder a sus datos procesados de dos maneras:
+
+1. **Informe de Looker:** Acceso a informes detallados y visualizaciones de datos.
+2. **Depósito S3:** Descarga de datos procesados en formato parquet desde un depósito S3.
+
+## Tablas 
+>En construcción
+- `minute_sequence`
+- `sixty-minute-channel`
+- `thirty-minute-channel`
+- `minute-by-minute-channel`
+
+## Información de Contacto
+
+Para cualquier consulta o soporte, puedes contactarnos a través de los siguientes correos electrónicos:
+
+- **Consultas generales:** [jm@bb-media.com](mailto:jm@bb-media.com) / [nw@bb-media.com](mailto:nw@bb-media.com)
+- **Soporte técnico:** [support@bb-media.com](mailto:support@bb-media.com)
