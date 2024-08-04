@@ -98,7 +98,7 @@ As an alternative, you can use the Boto3 library in Python to upload files to S3
            print("Credentials not available")
            return False
 
-   uploaded = upload_to_aws('local_file.parquet', '<bucket-name>', 'Activity/local_file.parquet')
+   uploaded = upload_to_aws('local_file.parquet', '<bucket-name>', 'activity/local_file.parquet')
    ```
 
 ## AWS CLI Command Examples
@@ -107,22 +107,22 @@ For those who prefer using the command line, here are some examples of how to up
 
 - **Upload a file to Activity:**
   ```sh
-  aws s3 cp activity_20240709.parquet s3://<bucket-name>/activity/
+  aws s3 cp activity_20240709.parquet s3://<bucket-name>/activity/ --recursive
   ```
 
 - **Upload a file to Users:**
   ```sh
-  aws s3 cp users_20240709.jsonl s3://<bucket-name>/users/
+  aws s3 cp users_20240709.jsonl s3://<bucket-name>/users/ --recursive
   ```
 
 - **Upload a file to EPG:**
   ```sh
-  aws s3 cp epg_20240709.csv s3://<bucket-name>/epg/
+  aws s3 cp epg_20240709.csv s3://<bucket-name>/epg/ --recursive
   ```
 
 - **Upload a file to Devices:**
   ```sh
-  aws s3 cp devices_20240709.tsv s3://<bucket-name>/devices/
+  aws s3 cp devices_20240709.tsv s3://<bucket-name>/devices/ --recursive
   ```
 
 ## Support
